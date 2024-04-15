@@ -1,0 +1,33 @@
+#Testing about CI
+
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+
+
+
+
+    
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/CodeScanning.Server.csproj'
+    arguments: '--configuration release --output $(Build.ArtifactStagingDirectory) '
+    
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'dll_file'
+    publishLocation: 'Container'
