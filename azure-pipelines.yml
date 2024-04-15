@@ -31,3 +31,8 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'dll_file'
     publishLocation: 'Container'
+
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: '$(Build.ArtifactStagingDirectory)/*.zip'  # Specify the path to the zip file
+    destinationFolder: '$(Build.ArtifactStagingDirectory)/extracted'  # Specify the folder where you want to extract the files
